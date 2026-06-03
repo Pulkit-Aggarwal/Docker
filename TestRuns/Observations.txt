@@ -1,4 +1,4 @@
-Observations 
+Observations -
 
 
 - When I ran the command to build the multistage build after the single build stage, 
