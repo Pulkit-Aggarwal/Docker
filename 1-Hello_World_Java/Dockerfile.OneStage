@@ -1,0 +1,15 @@
+# Use the full JDK to both compile and run
+FROM eclipse-temurin:17-jdk
+
+WORKDIR /app
+
+# Copy the Java source code 
+# (The . at the very end of the command tells Docker 
+# where the build context is (the directory containing your source code))
+COPY HelloWorld.java .
+
+# Compile the code 
+RUN javac HelloWorld.java
+
+# Run the compiled Java program
+CMD ["java", "HelloWorld"]

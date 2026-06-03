@@ -1,0 +1,7 @@
+Observations 
+
+
+- When I ran the command to build the multistage build after the single build stage, 
+it picked the images from the docker cache instead of the external server.
+
+- The multi-stage build takes less memory than the single stage build.

@@ -1,0 +1,12 @@
+# Stage 1: Build
+FROM eclipse-temurin:17-jdk AS builder
+WORKDIR /build
+COPY Message.java HelloWorld.java ./
+RUN javac *.java
+
+# Stage 2: Run
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+# Copy all compiled .class files from the builder
+COPY --from=builder /build/*.class ./
+CMD ["java" "HelloWorld"]

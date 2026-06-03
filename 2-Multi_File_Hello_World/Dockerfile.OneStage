@@ -1,0 +1,10 @@
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+
+# Copy all the Java files
+COPY Message.java HelloWorld.java ./
+
+# Compile all the Java files at once 
+RUN javac *.java
+
+CMD ["java", "HelloWorld"]
