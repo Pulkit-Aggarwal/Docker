@@ -1,15 +1,21 @@
-# Use the full JDK to both compile and run
+# Use the official Eclipse Temurin image as the base image
+# This gets the jdk to be able to compile and run Java applications in this container
+# Docker downloads one copy of the jdk for each unique jdk version and that is then used to build all the containers
 FROM eclipse-temurin:17-jdk
 
+# Set the working directory inside the container to /app
+# This means that all subsequent commands will be run from this directory
 WORKDIR /app
 
-# Copy the Java source code 
+# Copy the Java source files from the host machine to the container
 # (The . at the very end of the command tells Docker 
 # where the build context is (the directory containing your source code))
+# This allows us to compile and run the Java application inside the container
 COPY HelloWorld.java .
 
-# Compile the code 
+# Compile the Java source file to create a .class file that can be executed by the Java Virtual Machine
 RUN javac HelloWorld.java
 
-# Run the compiled Java program
+# Specify the command to run the Java application when the container starts
+# This tells the container to execute the HelloWorld class
 CMD ["java", "HelloWorld"]

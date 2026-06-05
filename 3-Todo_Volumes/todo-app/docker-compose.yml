@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: todo_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgresuser
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_DB: tododb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  web:
+    build: ./backend
+    container_name: fastapi_todo_app
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgresuser:supersecretpassword@db:5432/tododb
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
