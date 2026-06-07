@@ -4,13 +4,18 @@ services:
     container_name: todo_postgres_db
     restart: always
     environment:
-      POSTGRES_USER: postgresuser
-      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_password
       POSTGRES_DB: tododb
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todo_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   web:
     build: ./backend
@@ -19,9 +24,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgresuser:supersecretpassword@db:5432/tododb
+      - DATABASE_URL=postgresql://todo_user:todo_password@db:5432/tododb
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
